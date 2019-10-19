@@ -1,3 +1,4 @@
+const baseURL = 'reqres.in'
 if ('function' === typeof importScripts) {
   importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
   /* global workbox */
@@ -27,7 +28,7 @@ if ('function' === typeof importScripts) {
     );
 
     workbox.routing.registerRoute(
-      /(http|https):\/\/reqres.in(.*)/,
+      new RegExp(`(http|https)://${baseURL}(.*)/`),
       new workbox.strategies.NetworkFirst({
         cacheName: 'reponse-cache',
         plugins: [
@@ -50,7 +51,7 @@ if ('function' === typeof importScripts) {
 
 
     workbox.routing.registerRoute(
-      /(http|https):\/\/reqres.in(.*)/,
+      new RegExp(`(http|https)://${baseURL}(.*)/`),
       new workbox.strategies.NetworkOnly({
         cacheName: 'post-cache',
         plugins: [
