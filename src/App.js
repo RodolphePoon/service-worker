@@ -2,6 +2,16 @@ import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import _ from "lodash"
 import './App.css';
+let defferedPrompt
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent Chrome 67 and earlier from automatically showing the prompt
+  e.preventDefault();
+  console.log('beforeinstallprompt', { e })
+  // Stash the event so it can be triggered later.
+  defferedPrompt = e
+  window.deferredPrompt = e;
+});
 
 
 
@@ -37,7 +47,8 @@ function App() {
   }
 
   const install = () => {
-    console.log({ prompt: window.deferredPrompt })
+    setState({ ...state, prompt: window.deferredPrompt, defferedPrompt })
+    console.log({ prompt: window.deferredPrompt, defferedPrompt })
   }
 
   return (
@@ -47,6 +58,10 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <pre style={{ color: "white" }}>{JSON.stringify(state, null, 2)}
+
+        </pre>
+
         {_.get(state, 'list', []).map(el => <div key={el.id}><h1>{`${el.first_name} ${el.last_name}`}</h1><img src={el.avatar} style={{ height: "200px", width: "200px" }} alt={`${el.first_name} ${el.last_name}`} /><p>{el.email}</p></div>)}
         <button onClick={getMore}>fetchMore</button>
         <button onClick={post}>Post</button>
