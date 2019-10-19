@@ -2,21 +2,14 @@ import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import _ from "lodash"
 import './App.css';
-let defferedPrompt
+import PromptButton from './promptButton';
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Prevent Chrome 67 and earlier from automatically showing the prompt
-  // e.preventDefault();
-  console.log('beforeinstallprompt', { e })
-  // Stash the event so it can be triggered later.
-  defferedPrompt = e
-  window.deferredPrompt = e;
-});
 
 
 
 function App() {
   const [state, setState] = useState({})
+  const [show, setShow] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,24 +36,13 @@ function App() {
         "job": "leader"
       })
     })
-    console.log({ res })
   }
 
-  const install = () => {
-    defferedPrompt.prompt();
-    defferedPrompt.userChoice
-      .then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the A2HS prompt');
-        } else {
-          console.log('User dismissed the A2HS prompt');
-        }
-        defferedPrompt = null;
-      });
-
-    setState({ ...state, prompt: window.deferredPrompt, defferedPrompt })
-    console.log({ prompt: window.deferredPrompt, defferedPrompt })
+  const showButton = () => {
+    setShow(true)
   }
+
+
 
   return (
     <div className="App">
@@ -76,7 +58,9 @@ function App() {
         {_.get(state, 'list', []).map(el => <div key={el.id}><h1>{`${el.first_name} ${el.last_name}`}</h1><img src={el.avatar} style={{ height: "200px", width: "200px" }} alt={`${el.first_name} ${el.last_name}`} /><p>{el.email}</p></div>)}
         <button onClick={getMore}>fetchMore</button>
         <button onClick={post}>Post</button>
-        <button onClick={install}>install</button>
+        <button onClick={showButton}> show PromptButton</button>
+        {show && <PromptButton />}
+
 
       </header>
     </div>
