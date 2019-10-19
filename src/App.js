@@ -47,6 +47,17 @@ function App() {
   }
 
   const install = () => {
+    defferedPrompt.prompt();
+    defferedPrompt.userChoice
+      .then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the A2HS prompt');
+        } else {
+          console.log('User dismissed the A2HS prompt');
+        }
+        defferedPrompt = null;
+      });
+
     setState({ ...state, prompt: window.deferredPrompt, defferedPrompt })
     console.log({ prompt: window.deferredPrompt, defferedPrompt })
   }
