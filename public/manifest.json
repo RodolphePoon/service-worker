@@ -19,6 +19,8 @@
     }
   ],
   "start_url": ".",
+  "prompt_message": "Ajoutez un raccourci sur l’écran d’accueil pour accéder facilement à Instagram",
+  "description": "Instagram is a simple way to capture and share the world's moments.",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
