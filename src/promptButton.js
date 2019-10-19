@@ -1,15 +1,4 @@
 import React from "react"
-let defferedPrompt
+import showInstall from "./showInstall"
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Prevent Chrome 67 and earlier from automatically showing the prompt
-  e.preventDefault();
-  // Stash the event so it can be triggered later.
-  defferedPrompt = e
-});
-
-const install = () => {
-  defferedPrompt.prompt();
-}
-
-export default () => <button onClick={install}>install</button>
+export default () => <button onClick={showInstall}>install</button>
